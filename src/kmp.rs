@@ -1,22 +1,5 @@
 use std::io;
 
-pub fn main() -> Result<(),&'static str>
-{
-    let mut buffer = String::new();
-    if let  Err(err) =  io::stdin().read_line(&mut buffer) {
-        return Err("stdin error");
-    }
-
-    let a = buffer.split_whitespace().collect::<Vec<&str>>();
-
-    for i in a {
-        println!("{}",i)
-    }
-
-    Ok(())
-
-}
-
 pub struct Kmp {
     pattern: String,
     dfa: Vec<Vec<usize>>
