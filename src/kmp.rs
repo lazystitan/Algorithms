@@ -1,6 +1,4 @@
 use std::io;
-use std::io::Read;
-use crate::matrix::Matrix;
 
 pub fn main() -> Result<(),&'static str>
 {
@@ -21,32 +19,31 @@ pub fn main() -> Result<(),&'static str>
 
 pub struct Kmp {
     pattern: String,
-    dfa: Matrix
+    dfa: Vec<Vec<usize>>
 }
 
 impl Kmp {
     pub fn new(pattern : String) -> Kmp{
+        let pattern_as_bytes = pattern.as_bytes();
         let len = pattern.len();
         let height = 256;
-        let mut dfa = Matrix::new(len,height);
+        let mut dfa:Vec<Vec<usize>> = vec![vec![0;len];height];
 
         let mut x = 0;
-        let mut c= pattern.as_bytes().get(0).unwrap();
-
-        dfa.set(*c as usize, 0, 1);
+        let mut c= pattern_as_bytes[0] as usize;
+        dfa[c][0] = 1;
 
         for j in 1..(pattern.len()-1) {
-            c = pattern.as_bytes().get(j).unwrap();
+            c = pattern_as_bytes[j] as usize;
             for i in 0..256 {
-                println!("{}-{}-{}",i,j,x);
-                dfa.set(i, j, dfa.get(i, x).unwrap());
+                dfa[i][j] = dfa[i][x];
             }
-            dfa.set(*c as usize, j, j as i32 + 1);
-            x = dfa.get(*c as usize, x).unwrap() as usize;
+            dfa[c][j] = j+1;
+            x = dfa[c][x] as usize;
         }
 
-        dfa.set(*pattern.as_bytes().get(pattern.len()-1).unwrap() as usize,pattern.len()-1 as usize, pattern.len() as i32);
-
+        c = pattern_as_bytes[pattern.len()-1] as usize;
+        dfa[c][pattern.len()-1] = pattern.len();
         Kmp {
             pattern,
             dfa
@@ -54,19 +51,22 @@ impl Kmp {
     }
 
     pub fn show_dfa(&self) {
-        println!("{}",self.dfa);
+        for line in &self.dfa {
+            println!("{:?}",line);
+        }
     }
 
-    pub fn search(&self, text : String) -> usize
+    pub fn search(&self, text : &String) -> usize
     {
         let mut j = 0;
         let mut position= 0;
+        let text_as_bytes = text.as_bytes();
         for i in 0..text.len() {
-            j = self.dfa.get(*text.as_bytes().get(i).unwrap() as usize, j).unwrap() as usize;
+            j = self.dfa[text_as_bytes[i] as usize][j] as usize;
             position = i;
         }
         if j == self.pattern.len() {
-            position - self.pattern.len()
+            position - self.pattern.len() + 1
         } else {
             text.len()
         }
@@ -83,9 +83,16 @@ mod test {
         let pattern = "abc".to_string();
 
         let kmp = Kmp::new(pattern);
-        let position = kmp.search(text);
+        let position = kmp.search(&text);
 
-        assert_eq!(position, 1);
+        assert_eq!(position, 2);
+
+        let pattern = "abcd".to_string();
+
+        let kmp = Kmp::new(pattern);
+        let position = kmp.search(&text);
+
+        assert_eq!(position, text.len());
 
     }
 

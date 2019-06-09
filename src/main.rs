@@ -1,10 +1,15 @@
-use std::process;
+use std::{process, io};
 use crate::kmp::Kmp;
 
-mod matrix;
 mod kmp;
 
 fn main() {
-    let kmp = Kmp::new("ababac".to_string());
-    kmp.show_dfa();
+    let mut buffer = String::new();
+    io::stdin().read_line(&mut buffer).unwrap();
+    buffer.pop();
+    let number:usize = buffer.parse().unwrap();
+    let mut array = vec![vec![0;3];3];
+    println!("len:{}",number);
+    array[1][2] = 2;
+    println!("array:{:?}",array);
 }
