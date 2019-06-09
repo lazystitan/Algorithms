@@ -1,0 +1,7 @@
+[package]
+name = "Algorithms"
+version = "0.1.0"
+authors = ["Riton <ritonelion@outlook.com>"]
+edition = "2018"
+
+[dependencies]
