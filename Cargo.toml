@@ -5,3 +5,5 @@ authors = ["Riton <ritonelion@outlook.com>"]
 edition = "2018"
 
 [dependencies]
+rand = "0.6"
+num = "0.2"

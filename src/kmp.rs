@@ -1,4 +1,3 @@
-use std::io;
 
 pub struct Kmp {
     pattern: String,

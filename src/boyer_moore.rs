@@ -12,7 +12,7 @@ impl Bm {
             right[pattern_as_bytes[j] as usize] = j as i32;
         }
 
-//        eprintln!("{:?}",right);
+        eprintln!("{:?}",right);
 
         Bm {
             pattern,
@@ -25,30 +25,23 @@ impl Bm {
         let pattern_as_bytes = self.pattern.as_bytes();
         let n = text.len();
         let m = self.pattern.len();
-        let mut skip=0;
 
+        let mut skip=0;
         let mut i = 0;
         while i <= n-m {
             skip = 0;
             eprintln!("i:{}",i);
-
             for j in (0..m).rev() {
                 eprintln!("j:{}",j);
                 if pattern_as_bytes[j] != text_as_bytes[i+j] {
                     skip = j as i32 - self.right[text_as_bytes[i+j] as usize];
-                    if skip < 1 {
-                        skip = 1;
-                    }
+                    if skip < 1 { skip = 1; }
                     break;
                 }
             }
-            if skip == 0 {
-                return i
-            }
-
+            if skip == 0 { return i }
             i += skip as usize;
         }
-
         n
     }
 }
