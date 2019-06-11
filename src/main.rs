@@ -1,11 +1,17 @@
+#[macro_use]
+mod lib;
 mod string_match;
 
-use string_match::{Search, Kmp, RabinKarp, Bm};
+use string_match::{Bm, Kmp, RabinKarp, Search};
+use Algorithms::for_test::Line;
+
 
 fn main() {
-    let text = "where am i? what the fuck is this?".to_string();
-    let pattern = "what".to_string();
+    let mut line = Line(0);
+    for i in line {
+        println!("{}", i);
+    }
 
-    let rk = RabinKarp::new(pattern);
-    let position = rk.search(&text);
+    several_times!(1,2,3);
+
 }

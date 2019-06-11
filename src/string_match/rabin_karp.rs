@@ -1,17 +1,16 @@
-use crate::string_match::prime;
-use crate::string_match::search::Search;
+use crate::string_match::{prime, Search};
 
 pub struct RabinKarp {
-    pattern : String,
-    pattern_hash : u64,
-    pattern_len : usize,
-    q : u64,
-    r : u64,
-    rm : u64,
+    pattern: String,
+    pattern_hash: u64,
+    pattern_len: usize,
+    q: u64,
+    r: u64,
+    rm: u64,
 }
 
 impl RabinKarp {
-    pub fn new(pattern : String) -> RabinKarp {
+    pub fn new(pattern: String) -> RabinKarp {
         let pattern_len = pattern.len();
         let r = 256;
         let max = 256u64.pow(pattern_len as u32);
@@ -28,10 +27,9 @@ impl RabinKarp {
             pattern_len,
             q,
             r,
-            rm
+            rm,
         }
     }
-
 }
 
 impl Search for RabinKarp {
@@ -43,7 +41,9 @@ impl Search for RabinKarp {
             return 0;
         }
         for i in self.pattern_len..text_len {
-            text_hash = (text_hash + self.q - self.rm * text_as_bytes[i - self.pattern_len] as u64 % self.q) % self.q;
+            text_hash = (text_hash + self.q
+                - self.rm * text_as_bytes[i - self.pattern_len] as u64 % self.q)
+                % self.q;
             text_hash = (text_hash * self.r + text_as_bytes[i] as u64) % self.q;
             if self.pattern_hash == text_hash {
                 return i - self.pattern_len + 1;
@@ -54,9 +54,7 @@ impl Search for RabinKarp {
     }
 }
 
-
-fn rk_hash(pattern : &String, len : usize, q : u64) -> u64
-{
+fn rk_hash(pattern: &String, len: usize, q: u64) -> u64 {
     let pattern_as_bytes = pattern.as_bytes();
     let mut h = 0;
     for j in 0..len {
@@ -65,10 +63,9 @@ fn rk_hash(pattern : &String, len : usize, q : u64) -> u64
     h
 }
 
-fn long_random_prime(max : u64) -> u64 {
+fn long_random_prime(max: u64) -> u64 {
     prime::gen_prime_max(max)
 }
-
 
 #[cfg(test)]
 mod test {
