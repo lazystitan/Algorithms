@@ -1,4 +1,5 @@
 use crate::prime;
+use crate::search::Search;
 
 pub struct RabinKarp {
     pattern : String,
@@ -31,7 +32,10 @@ impl RabinKarp {
         }
     }
 
-    pub fn search(&self, text : &String) -> usize {
+}
+
+impl Search for RabinKarp {
+    fn search(&self, text: &String) -> usize {
         let text_as_bytes = text.as_bytes();
         let text_len = text.len();
         let mut text_hash = rk_hash(text, self.pattern_len, self.q);
@@ -39,7 +43,7 @@ impl RabinKarp {
             return 0;
         }
         for i in self.pattern_len..text_len {
-            text_hash = (text_hash + self.q - self.rm * text_as_bytes[i-self.pattern_len] as u64 % self.q) % self.q;
+            text_hash = (text_hash + self.q - self.rm * text_as_bytes[i - self.pattern_len] as u64 % self.q) % self.q;
             text_hash = (text_hash * self.r + text_as_bytes[i] as u64) % self.q;
             if self.pattern_hash == text_hash {
                 return i - self.pattern_len + 1;

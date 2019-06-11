@@ -1,26 +1,21 @@
 extern crate rand;
-use rand::prelude::*;
 
 mod kmp;
 mod boyer_moore;
 mod rabin_karp;
 mod prime;
+mod search;
+mod string_match;
+
+use rand::prelude::*;
+//use rabin_karp::RabinKarp;
+//use search::Search;
+use string_match::{RabinKarp, Search};
 
 fn main() {
-    let mut rng = thread_rng();
-    let mut flag_low = false;
-    let mut flag_high = false;
-    for _ in 0..10000 {
-        let x = rng.gen_range(0,10);
-        if x == 0  {
-            flag_low = true;
-            break;
-        } else if x == 10 {
-            flag_high = true;
-            break;
-        }
-    }
+    let text = "where am i? what the fuck is this?".to_string();
+    let pattern = "what".to_string();
 
-    if flag_low { println!("low"); }
-    if flag_high { println!("high"); }
+    let bm = RabinKarp::new(pattern);
+    let position = bm.search(&text);
 }
