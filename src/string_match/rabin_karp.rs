@@ -1,5 +1,5 @@
-use crate::prime;
-use crate::search::Search;
+use crate::string_match::prime;
+use crate::string_match::search::Search;
 
 pub struct RabinKarp {
     pattern : String,

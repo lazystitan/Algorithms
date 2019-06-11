@@ -6,15 +6,15 @@ use num::bigint::{BigUint, ToBigUint};
 use num::traits::One;
 
 pub fn is_prime(number : u64) -> bool {
-    eprintln!("number is {}",number);
+//    eprintln!("number is {}",number);
 
     if number <= 3 && (number == 2 || number == 3) {
-        eprintln!("{} is small or equal to 3, and is prime.",number);
+//        eprintln!("{} is small or equal to 3, and is prime.",number);
         return true
     }
 
     if number % 2 == 0 {
-        eprintln!("{} can be divided by 2 so it's not a prime.",number);
+//        eprintln!("{} can be divided by 2 so it's not a prime.",number);
         return false
     }
 
