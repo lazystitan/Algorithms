@@ -85,6 +85,52 @@ pub fn gen_prime_max(high: u64) -> u64 {
     1
 }
 
+pub mod sieve {
+
+    pub fn gen_prime(max : u64) -> Vec<u64> {
+        let mut numbers = vec![true ; max as usize];
+
+        numbers[0] = false;
+
+        for i in (2..(max as f64).sqrt() as u64).step_by(2) {
+            let mut times = 2;
+            while (i + 1) * times <= max {
+//                eprintln!("{}", (i + 1) * times);
+                numbers[((i + 1) * times - 1) as usize] = false;
+                times += 1;
+            }
+        }
+
+//        eprintln!("{:?}",numbers);
+
+        let mut result = Vec::new();
+        result.push(2);
+        let mut i = 3;
+        for v in (2..numbers.len()).step_by(2) {
+            if numbers[v] {
+                result.push(i as u64);
+//                eprintln!("{}",i);
+            }
+            i += 2;
+        }
+
+        result
+    }
+
+    #[cfg(test)]
+    mod test {
+        use super::*;
+
+        #[test]
+        fn test() {
+            let result = gen_prime(1_0000_0000);
+//            eprintln!("{:?}", result);
+            eprintln!("{}", result.len());
+            assert!(false);
+        }
+    }
+}
+
 //slow
 fn pow(a: u64, b: u64) -> BigUint {
     //    let mut o = a;

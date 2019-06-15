@@ -1,17 +1,26 @@
-#[macro_use]
-mod lib;
+extern crate time;
+
+use std::collections::VecDeque;
+
 mod string_match;
-
-use string_match::{Bm, Kmp, RabinKarp, Search};
-use Algorithms::for_test::Line;
-
+mod math;
+mod basic_type;
+mod sort;
 
 fn main() {
-    let mut line = Line(0);
-    for i in line {
-        println!("{}", i);
+    for i in (1..10).rev() {
+        println!("{}",i);
+    }
+}
+
+trait Test {
+    fn prt() {
+        println!("ok");
     }
 
-    several_times!(1,2,3);
-
+    fn test() {
+        Self::prt();
+    }
 }
+
+

@@ -1,13 +1,14 @@
-pub mod boyer_moore;
-pub mod kmp;
+mod boyer_moore;
+mod kmp;
 mod prime;
-pub mod rabin_karp;
-pub mod search;
+mod rabin_karp;
+mod search;
 
 pub use boyer_moore::Bm;
 pub use kmp::Kmp;
 pub use rabin_karp::RabinKarp;
 pub use search::Search;
+pub use prime::sieve::gen_prime;
 
 fn search<T: Search>(string_match_algorithm: T, text: &String) -> usize {
     string_match_algorithm.search(text)
