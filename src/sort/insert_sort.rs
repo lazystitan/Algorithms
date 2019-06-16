@@ -1,20 +1,20 @@
 use crate::sort::sort_trait::SortTrait;
 use std::fmt::Display;
 
-struct InsertSort;
+pub struct InsertSort;
 
-impl <T : Display> SortTrait<T> for InsertSort
+impl <T> SortTrait<T> for InsertSort
     where T:PartialEq + PartialOrd
 {
     fn sort(vector: &mut Vec<T>) {
         let n = vector.len();
         for i in 1..n {
             for  j in (1..(i+1)).rev() {
-                eprintln!("{}",j);
+//                eprintln!("{}",j);
                 if Self::less(&(vector[j]), &(vector[j-1]) ) {
                     Self::exchange(vector, j, j-1);
-                    for item in vector.iter() { eprint!("{},",item);}
-                    eprintln!("");
+//                    for item in vector.iter() { eprint!("{},",item);}
+//                    eprintln!("");
                 } else {
                     break;
                 }
