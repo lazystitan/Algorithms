@@ -65,3 +65,8 @@ pub mod macro_test {
         }
     }
 }
+
+extern {
+    pub fn another_function(input: libc::c_int) -> libc::c_int;
+}
+

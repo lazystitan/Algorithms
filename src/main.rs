@@ -1,8 +1,6 @@
 extern crate libc;
 
-extern {
-    fn another_function(input: libc::c_int) -> libc::c_int;
-}
+use algorithms::another_function;
 
 fn call(input : i32) -> i32 {
     unsafe {
