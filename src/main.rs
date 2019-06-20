@@ -1,31 +1,24 @@
-mod string_match;
-mod math;
-mod basic_type;
-mod sort;
-mod thread_pool;
-//mod no_mod_test;
+extern crate libc;
 
-use rand::prelude::*;
-use sort::{SelectSort, InsertSort, ShellSort, SortTrait};
-use std::thread;
-use thread_pool::ThreadPool;
-use std::time::Duration;
+//mod string_match;
+//mod math;
+//mod basic_type;
+//mod sort;
+//mod thread_pool;
+
+extern {
+    fn another_function(input: libc::c_int) -> libc::c_int;
+}
+
+fn call(input : i32) -> i32 {
+    unsafe {
+        another_function(input) as i32
+    }
+}
 
 fn main() {
-    let pool = thread_pool::ThreadPool::new(4);
-    pool.execute(|| {
-        thread::sleep(Duration::from_secs(3));
-        println!("first");
-    });
-
-    pool.execute(|| {
-        thread::sleep(Duration::from_secs(2));
-        println!("second");
-    });
-
-    pool.execute(|| {
-        thread::sleep(Duration::from_secs(1));
-        println!("third");
-    });
-
+    let input = 4;
+    let output = call(input);
+    println!("{} * 2 = {}", input, output);
+    println!("hello");
 }

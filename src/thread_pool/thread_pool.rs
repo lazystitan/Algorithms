@@ -3,7 +3,7 @@ use std::sync::{mpsc, Mutex, Arc};
 use crate::thread_pool::message::Message;
 
 pub struct ThreadPool {
-    pool : Vec<Worker>,
+    workers: Vec<Worker>,
     sender : mpsc::Sender<Message>
 }
 
@@ -18,7 +18,7 @@ impl ThreadPool {
             pool.push(Worker::new(id, Arc::clone(&receiver)));
         }
         ThreadPool {
-            pool,
+            workers: pool,
             sender
         }
     }
@@ -34,11 +34,11 @@ impl ThreadPool {
 impl Drop for ThreadPool {
     fn drop(&mut self) {
 
-        for _ in &mut self.pool {
+        for _ in &mut self.workers {
             self.sender.send(Message::Terminate).unwrap();
         }
 
-        for thread in &mut self.pool {
+        for thread in &mut self.workers {
             println!("shutdown {}", thread.id);
             if let Some(thread) = thread.thread.take() {
                 thread.join().unwrap();

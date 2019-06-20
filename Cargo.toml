@@ -1,11 +1,13 @@
 [package]
-name = "Algorithms"
+name = "algorithms"
 version = "0.1.0"
 authors = ["Riton <ritonelion@outlook.com>"]
 edition = "2018"
 
 [dependencies]
-rand = "0.6"
-num = "0.2"
-#time = "0.1"
-#plotters = "^0.2.1"
+#rand = "0.6"
+#num = "0.2"
+libc = "0.2"
+
+[build-dependencies]
+cc = "1.0"
