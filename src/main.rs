@@ -1,11 +1,5 @@
 extern crate libc;
 
-//mod string_match;
-//mod math;
-//mod basic_type;
-//mod sort;
-//mod thread_pool;
-
 extern {
     fn another_function(input: libc::c_int) -> libc::c_int;
 }
