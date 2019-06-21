@@ -2,6 +2,6 @@ extern crate cc;
 
 fn main() {
     cc::Build::new()
-        .file("src/double.c")
+        .file("src/c_files/double.c")
         .compile("double");
 }
