@@ -1,8 +1,8 @@
 extern crate libc;
 
-mod cc_rs_libc_test;
-mod macro_test;
-mod include_test;
+mod algorithms;
+mod language_learn;
+mod practice;
 
 use cc_rs_libc_test::{ another_function, show_some_content };
 use std::thread::sleep;
@@ -27,5 +27,5 @@ fn main() {
     let output = call(input);
     println!("{} * 2 = {}", input, output);
     sleep(Duration::from_secs(2));
-    println!("hello,longlonglong");
+    println!("hello,long long long");
 }
