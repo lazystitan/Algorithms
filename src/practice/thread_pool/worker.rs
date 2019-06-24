@@ -1,6 +1,6 @@
 use std::sync::{mpsc, Mutex, Arc};
 use std::thread;
-use crate::thread_pool::message::Message;
+use super::message::Message;
 
 pub struct Worker {
     pub id : usize,

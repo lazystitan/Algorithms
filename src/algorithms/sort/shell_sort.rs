@@ -1,4 +1,4 @@
-use crate::sort::SortTrait;
+use super::sort_trait::SortTrait;
 use std::fmt::Display;
 
 pub struct ShellSort;

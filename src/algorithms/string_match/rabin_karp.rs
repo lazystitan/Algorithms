@@ -1,4 +1,4 @@
-use crate::string_match::{prime, Search};
+use super::{prime, Search};
 
 pub struct RabinKarp {
     pattern: String,

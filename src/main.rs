@@ -4,7 +4,7 @@ mod algorithms;
 mod language_learn;
 mod practice;
 
-use cc_rs_libc_test::{ another_function, show_some_content };
+use language_learn::cc_rs_libc_test::{ another_function, show_some_content };
 use std::thread::sleep;
 use std::time::Duration;
 use std::thread;

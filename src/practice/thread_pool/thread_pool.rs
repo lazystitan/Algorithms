@@ -1,6 +1,6 @@
-use crate::thread_pool::worker::Worker;
+use super::worker::Worker;
 use std::sync::{mpsc, Mutex, Arc};
-use crate::thread_pool::message::Message;
+use super::message::Message;
 
 pub struct ThreadPool {
     workers: Vec<Worker>,

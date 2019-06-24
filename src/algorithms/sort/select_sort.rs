@@ -1,4 +1,4 @@
-use crate::sort::sort_trait::SortTrait;
+use super::sort_trait::SortTrait;
 
 pub struct SelectSort;
 

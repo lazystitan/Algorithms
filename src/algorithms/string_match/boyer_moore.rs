@@ -1,4 +1,4 @@
-use crate::string_match::Search;
+use super::Search;
 
 pub struct Bm {
     pattern: String,
