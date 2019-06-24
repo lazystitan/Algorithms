@@ -6,9 +6,10 @@ This is a repository for myself to learn, practice, and make some small stuff in
 
 Besides, the `build.rs` in root directory is for learning `cc`. 
 
-#What had I done by now?
+# What had I done by now?
 
 ## Algorithms Folder
+
 ### string_match
 1.  KMP
 2.  Boyer Moores match
@@ -24,10 +25,14 @@ Besides, the `build.rs` in root directory is for learning `cc`.
 4.  Sort trait for sort algorithms
 ### math
 1.  Sqrt algorithm, not complete
+
+
 ## Language_learn Folder
 1.  Macro `include` test
 2.  `cc` and `libc` test
 3.  Macro practice
+
+
 ## Practice
 1. A simple thread pool
 
