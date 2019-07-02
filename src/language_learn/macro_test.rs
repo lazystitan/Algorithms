@@ -1,24 +1,24 @@
-#[macro_use]
-pub mod macro_test {
+//#[macro_export]
+//#[macro_use]
+macro_rules! macro_expr {
+    ($($a : expr),+) => {
+        {$(println!("{}",$a);)+}
+    };
+}
 
-    macro_rules! several_times {
-        ($($a : expr),+) => {
-            {
-                $(
-                    println!("{}",$a);
-                )+
-            }
-        };
+#[cfg(test)]
+mod test {
+//    use super::*;
+
+    #[test]
+    fn test() {
+        macro_expr!(1,2,3);
+        assert!(false);
     }
 
-    #[cfg(test)]
-    mod test {
-//        use super::*;
-
-        #[test]
-        fn test() {
-            several_times!(1,2,3);
-            assert!(false);
-        }
+    #[test]
+    fn some() {
+        println!("some");
+        assert!(false);
     }
 }
