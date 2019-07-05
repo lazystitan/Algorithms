@@ -4,51 +4,60 @@ use std::fmt::{Display, Debug};
 pub struct MergeSort;
 
 impl <T> SortTrait<T> for MergeSort
-    where T:PartialEq + PartialOrd  + Clone
+    where T:PartialEq + PartialOrd
 {
     fn sort(vector: &mut Vec<T>) {
-        let mut aux = Vec::with_capacity(vector.len());
-        for e in &*vector {
-            aux.push(e.clone());
+        let len = vector.len();
+        let mut new_vector = Vec::with_capacity(len);
+        for _ in 0..len {
+            new_vector.insert(0, vector.pop());
         }
-        Self::merge_sort(vector, 0, vector.len()-1, &mut aux);
+        let mut aux = Vec::with_capacity(len);
+        for i in 0..len {
+            aux.push(None);
+        }
+        Self::merge_sort(&mut new_vector, 0, len - 1, &mut aux);
+        for _ in 0..len {
+            vector.insert(0, new_vector.pop().unwrap().unwrap());
+        }
     }
 }
 
 impl MergeSort {
-    fn merge<T>(vector: &mut Vec<T>, low: usize, mid: usize, high: usize, aux : &mut Vec<T>)
-        where T:PartialOrd + PartialEq  + Clone
+    fn merge<T>(vector: &mut Vec<Option<T>>, low: usize, mid: usize, high: usize, aux : &mut Vec<Option<T>>)
+        where T:PartialOrd + PartialEq
     {
         let mut i = low; //index for left
         let mut j = mid + 1; //index for right
         for k in low..high + 1 {
             //auxiliary vector
-            aux[k] = vector[k].clone();
+//            let some = (&mut vector[k]).take().unwrap();
+            aux[k] = (&mut vector[k]).take();
         }
         for k in low..high + 1 {
             if i > mid {
                 //left was run out
-                vector[k] = aux[j].clone();
+                vector[k] = (&mut aux[j]).take();
                 j += 1;
             } else if j > high {
                 //right was run out
 
-                vector[k] = aux[i].clone();
+                vector[k] = (&mut aux[i]).take();
                 i += 1;
             } else if Self::less(&aux[j], &aux[i]) {
                 //right is less than left
-                vector[k] = aux[j].clone();
+                vector[k] = (&mut aux[j]).take();
                 j += 1;
             } else {
                 //left is less than right
-                vector[k] = aux[i].clone();
+                vector[k] = (&mut aux[i]).take();
                 i += 1;
             }
         }
     }
 
-    fn merge_sort<T>(vector : &mut Vec<T>, low : usize, high : usize, aux : &mut Vec<T>)
-        where T:PartialOrd + PartialEq  + Clone
+    fn merge_sort<T>(vector : &mut Vec<Option<T>>, low : usize, high : usize, aux : &mut Vec<Option<T>>)
+        where T:PartialOrd + PartialEq
     {
         if high <= low {
             return;

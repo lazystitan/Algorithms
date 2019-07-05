@@ -3,11 +3,13 @@ mod select_sort;
 mod insert_sort;
 mod shell_sort;
 mod merge_sort;
+pub mod merge_sort_without_copytrait;
 
 pub use sort_trait::SortTrait;
 pub use select_sort::SelectSort;
 pub use insert_sort::InsertSort;
 pub use shell_sort::ShellSort;
+pub use merge_sort::MergeSort;
 
 #[cfg(test)]
 mod test {
