@@ -2,6 +2,7 @@ mod sort_trait;
 mod select_sort;
 mod insert_sort;
 mod shell_sort;
+mod merge_sort;
 
 pub use sort_trait::SortTrait;
 pub use select_sort::SelectSort;
