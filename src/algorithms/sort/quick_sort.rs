@@ -13,6 +13,9 @@ impl <T> SortTrait<T> for QuickSort
             new_vector.push(vector.pop());
         }
 
+        //there should have a function that can eliminate dependency of inputs
+        //StdRandom.shuffle(vector);
+
         Self::quick_sort(&mut new_vector, 0, length - 1);
 
         for i in 0..length {
@@ -40,18 +43,32 @@ impl QuickSort {
     {
         let mut i = low;
         let mut j = high + 1;
-        let mut value = &mut Some((&mut vector[low as usize]).take().unwrap()); //有没有改进方法？
-
+///     right but two complex:
+/// ```
+///     let mut value = &mut Some((&mut vector[low as usize]).take().unwrap());
+///     //......other code
+///     (&mut vector[low as usize]).replace(value.take().unwrap());
+/// ```
+///     error eg:
+/// ```
+///     let mut value = vector[low as usize];
+/// ```
+///     use &mut vector[low as usize] get mutable borrow from vector which is &mut Option,
+///     then use take to move out T
+        let mut value = (&mut vector[low as usize]).take();
         i += 1;
         j -= 1;
         loop {
-            while Self::less(&vector[i as usize], value) {
+            //find the element that is bigger than value(the first element of this part) from left
+            while Self::less(&vector[i as usize], &value) {
                 if  i == high {
                     break;
                 }
                 i += 1;
             }
-            while Self::less(value, &vector[j as usize]) {
+            //find the element that is less than value from right
+            //or find the smaller element ready for exchange with first element when j is less than is
+            while Self::less(&value, &vector[j as usize]) {
                 if j == low {
                     break;
                 }
@@ -62,8 +79,9 @@ impl QuickSort {
             }
             Self::exchange(vector, i as usize, j as usize);
         }
-        (&mut vector[low as usize]).replace(value.take().unwrap());
-//        vector[j] = value;
+        //put value back to vector
+        (&mut vector[low as usize]).replace(value.unwrap());
+        //exchange value with vector[j]
         Self::exchange(vector, low as usize, j as usize);
         j
     }
