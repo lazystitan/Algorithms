@@ -10,7 +10,7 @@ impl <T> SortTrait<T> for MergeSortNC
         let len = vector.len();
         let mut new_vector = Vec::with_capacity(len);
         for _ in 0..len {
-            new_vector.insert(0, vector.pop());
+            new_vector.push(vector.pop());
         }
         let mut aux = Vec::with_capacity(len);
         for i in 0..len {
