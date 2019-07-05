@@ -19,10 +19,13 @@ Besides, the `build.rs` in root directory is for learning `cc`.
 ### basic_type
 1.  Bag structure, not fully complete
 ### sort
-1.  Insert sort
-2.  Select sort
-3.  Shell sort
-4.  Sort trait for sort algorithms
+0.  ``` SortTrait ``` Sort trait for sort algorithms 
+1.  ``` InsertionSort ``` Insert sort 
+2.  ``` SelectionSort ``` Select sort 
+3.  ``` ShellSort ``` Shell sort 
+4.  ``` MergeSort ``` Merge sort that need to implemented Clone 
+5.  ``` MergeSortNC ``` Merge sort that don't need to implemented Clone by using Option 
+6.  ``` MergeBUSort ``` Merge sort from bottom to up 
 ### math
 1.  Sqrt algorithm, not complete
 
@@ -31,8 +34,10 @@ Besides, the `build.rs` in root directory is for learning `cc`.
 1.  Macro `include` test
 2.  `cc` and `libc` test
 3.  Macro practice
+4.  Mutable and immutable reference test
+5.  Comparison between two Options
 
 
 ## Practice
-1. A simple thread pool
+1. A simple thread poolK
 
