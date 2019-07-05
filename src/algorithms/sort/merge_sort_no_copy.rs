@@ -1,9 +1,9 @@
 use crate::algorithms::sort::SortTrait;
 use std::fmt::{Display, Debug};
 
-pub struct MergeSort;
+pub struct MergeSortNC;
 
-impl <T> SortTrait<T> for MergeSort
+impl <T> SortTrait<T> for MergeSortNC
     where T:PartialEq + PartialOrd
 {
     fn sort(vector: &mut Vec<T>) {
@@ -23,7 +23,7 @@ impl <T> SortTrait<T> for MergeSort
     }
 }
 
-impl MergeSort {
+impl MergeSortNC {
     fn merge<T>(vector: &mut Vec<Option<T>>, low: usize, mid: usize, high: usize, aux : &mut Vec<Option<T>>)
         where T:PartialOrd + PartialEq
     {
@@ -78,9 +78,9 @@ mod test {
     fn test() {
         let mut vector = vec![67, 7 ,234,270,12,3532,45,12,75,2,1,31,643,1257,15,72,326,345,76];
         let len = vector.len();
-        MergeSort::sort(&mut vector);
+        MergeSortNC::sort(&mut vector);
         eprintln!("{:?}",vector);
-        assert!(MergeSort::is_sorted(&vector));
+        assert!(MergeSortNC::is_sorted(&vector));
         assert_eq!(vector.len(), len);
     }
 
