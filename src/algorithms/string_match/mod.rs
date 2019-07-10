@@ -27,7 +27,7 @@ mod test {
         let mut rng = thread_rng();
         let mut select: i32 = rng.gen();
         select = select % 4;
-        let mut position;
+        let position;
         match select {
             1 => position = search(Kmp::new(pattern), &text),
             2 => position = search(Bm::new(pattern), &text),

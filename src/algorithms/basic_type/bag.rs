@@ -16,7 +16,7 @@ impl<T> Bag<T> {
     }
 
     pub fn is_empty(&self) -> bool {
-        self.is_empty()
+        self.bag.is_empty()
     }
 
     pub fn size(&self) -> usize {

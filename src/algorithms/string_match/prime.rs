@@ -66,7 +66,7 @@ pub fn gen_prime(low: u64, high: u64) -> u64 {
 
 pub fn gen_prime_max(high: u64) -> u64 {
     let mut rng = thread_rng();
-    let mut low;
+    let low;
     if high > 100 {
         low = high - 100;
     } else {

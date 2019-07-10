@@ -5,18 +5,27 @@ mod practice;
 
 use rand::{thread_rng, Rng};
 
-
-#[derive(Debug, PartialOrd, PartialEq)]
-struct Integer(i32);
+struct ListNode {
+    value : i32,
+    next : Option<Box<ListNode>>
+}
 
 fn main() {
-    let mut rng = thread_rng();
-    let mut v = Vec::new();
+    let header =  ListNode {
+        value : 1,
+        next : Some(Box::new(ListNode {
+            value : 2,
+            next : Some(Box::new(ListNode {
+                value : 3,
+                next :None
+            }))
+        }))
+    };
 
-    for _ in 0..10 {
-        v .push(rng.gen_range(0, 100));
-    }
+    let p = header.next.unwrap();
 
-    println!("{:?}",v);
+    println!("{}",p.value);
+    println!("{}", header.value);
+    println!("{}",p.value);
 }
 
