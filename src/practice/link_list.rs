@@ -70,6 +70,7 @@ impl <T> LinkList<T> {
 #[cfg(test)]
 mod test {
     use super::*;
+    use std::collections::LinkedList;
 
     #[test]
     fn new_test() {
@@ -83,5 +84,17 @@ mod test {
         }
 
         assert!(false);
+    }
+
+    #[test]
+    fn std_linkedlist_test() {
+        let mut l = LinkedList::new();
+        l.push_back(12);
+        l.push_back(14);
+        let mut v  = Vec::with_capacity(l.len());
+        for i in l.iter() {
+            v.push(i.clone());
+        }
+        assert_eq!(v, vec![12,14])
     }
 }

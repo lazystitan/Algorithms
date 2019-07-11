@@ -2,8 +2,9 @@ pub mod include_test;
 pub mod cc_rs_libc_test;
 #[macro_use]
 mod macro_test;
-mod mutable_imutable;
+mod mutable_immutable;
 mod compare_option;
+mod option_test;
 
 mod test_in_mod{
     #[test]
