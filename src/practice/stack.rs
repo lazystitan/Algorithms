@@ -51,7 +51,7 @@ pub struct Stack<T> {
 }
 
 impl <T> Stack<T> {
-    fn new() -> Self{
+    pub fn new() -> Self{
         Self {
             list : TopNode {
                 len : 0,
@@ -60,16 +60,16 @@ impl <T> Stack<T> {
         }
     }
 
-    fn push(&mut self, value : T) {
+    pub fn push(&mut self, value : T) {
         self.list.len += 1;
         let new_node = Box::new(StructNode::with_next(value, self.list.next.take()));
         self.list.next.replace(new_node);
     }
 
-    fn pop(&mut self) -> Option<T> {
-        self.list.len -= 1;
+    pub fn pop(&mut self) -> Option<T> {
         match self.list.next.take() {
             Some(mut node) => {
+                self.list.len -= 1;
                 if let Some(next_box) = node.next.take() {
                     self.list.next.replace(next_box);
                 }
@@ -79,12 +79,41 @@ impl <T> Stack<T> {
         }
     }
 
-    fn len(&self) -> usize {
+    pub fn len(&self) -> usize {
         self.list.len
     }
-
-
 }
+
+trait IntoStack<T> {
+    fn into_stack(self) -> Stack<T>;
+}
+
+impl <T>  IntoStack<T> for Vec<T> {
+    fn into_stack(self) -> Stack<T> {
+        let mut stack = Stack::new();
+        for i in self {
+            stack.push(i);
+        }
+        stack
+    }
+}
+
+macro_rules! stack {
+    [$($x : expr),+] => {
+        vec![$($x),+].into_stack();
+    };
+}
+
+
+impl <T> Iterator for Stack<T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.pop()
+    }
+}
+
+
 
 #[cfg(test)]
 mod test {
@@ -98,6 +127,34 @@ mod test {
         let b = stack.pop();
         assert_eq!(12, a);
         assert_eq!(b, None)
+    }
+
+    #[test]
+    fn iter_test() {
+        let v = [1,2,3];
+        let iter = v.iter();
+        let into_iter = vec![1,2,3].into_iter();
+        let v_iter = vec![1,2,3].iter();
+    }
+    #[test]
+    fn stack_iter_test() {
+        let mut stack = Stack::new();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+
+        for i in stack {
+            println!("{}",i);
+        }
+
+    }
+
+    #[test]
+    fn stack_macro_test() {
+        let stack = stack![1,2,3,4];
+        for i in stack {
+            println!("{}",i);
+        }
     }
 
 }
