@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{fmt, slice};
 use crate::main;
 
 struct TopNode<T> {
@@ -27,10 +27,10 @@ impl <T> StructNode<T> {
     }
 }
 
+#[cfg(test)]
 impl <T> fmt::Display for StructNode<T>
     where T: fmt::Display
 {
-    #[cfg(test)]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(f,"value: {}\nnext: {}",self.value, match self.next {
             Some(_) => "more",
@@ -82,6 +82,11 @@ impl <T> Stack<T> {
     pub fn len(&self) -> usize {
         self.list.len
     }
+
+    pub fn else_f(&self) {
+
+    }
+
 }
 
 trait IntoStack<T> {
@@ -105,6 +110,20 @@ macro_rules! stack {
 }
 
 
+///error
+/// ```
+/// impl <T> Stack<T>{
+///    pub fn map(&self) {}
+///    pub fn map(&mut self) {
+///    pub fn map(&mut self, f : fn(T)->T) {
+///        let mut p = &mut self.list.next;
+///        while let Some(node) = p {
+///            node.value = f(node.value);
+///            p = &mut node.next;
+///        }
+///    }
+/// }
+/// ```
 impl <T> Iterator for Stack<T> {
     type Item = T;
 
@@ -112,8 +131,6 @@ impl <T> Iterator for Stack<T> {
         self.pop()
     }
 }
-
-
 
 #[cfg(test)]
 mod test {
@@ -157,4 +174,30 @@ mod test {
         }
     }
 
+    #[test]
+    fn stack_closure_test() {
+        let mut v = vec![1,2,3];
+        let v = v.into_iter().map(|x| 2*x).collect::<Vec<i32>>();
+        println!("{:?}",v);
+        assert!(false);
+
+    }
+
+    #[test]
+    fn map_test() {
+//        let mut s = stack![1,2,3,4,5];
+        let mut s = Stack::new();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+        s.push(5);
+        s.push(6);
+//        s.map(|x| 2*x);
+//        s.map();
+//        s.else_f();
+        for i in s {
+            println!("{}",i);
+        }
+    }
 }

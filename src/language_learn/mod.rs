@@ -5,6 +5,7 @@ mod macro_test;
 mod mutable_immutable;
 mod compare_option;
 mod option_test;
+mod map_bug;
 
 mod test_in_mod{
     #[test]
