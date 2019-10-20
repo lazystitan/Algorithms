@@ -1,39 +1,39 @@
-struct DataA {
-    pub a : i32,
-    pub b : u64,
-    pub c : bool
-}
-
-/*
-    &DataA 0xdf352ff560
-    &a 0xdf352ff560
-    &b 0xdf352ff560
-    &c 0xdf352ff560
-    b 8byte 0xdf352ff560
-                       1
-                       2
-                       3
-                       4
-                       5
-                       6
-                       7
-    a 4byte 0xdf352ff568
-                       9
-                       a
-                       b
-    c       0xdf352ff56c
-
-*/
-
-struct DataB {
-    pub a : i32,
-    pub b : i32,
-    pub c : ()
-}
-
 #[cfg(test)]
-mod test {
-    use super::*;
+mod address_test {
+
+    struct DataA {
+        pub a : i32,
+        pub b : u64,
+        pub c : bool
+    }
+
+    /*
+        &DataA 0xdf352ff560
+        &a 0xdf352ff560
+        &b 0xdf352ff560
+        &c 0xdf352ff560
+        b 8byte 0xdf352ff560
+                           1
+                           2
+                           3
+                           4
+                           5
+                           6
+                           7
+        a 4byte 0xdf352ff568
+                           9
+                           a
+                           b
+        c       0xdf352ff56c
+
+    */
+
+    struct DataB {
+        pub a : i32,
+        pub b : i32,
+        pub c : ()
+    }
+
     use std::mem::size_of;
 
     #[test]
@@ -225,4 +225,21 @@ mod test {
         assert!(false);
     }
 
+}
+
+#[cfg(test)]
+mod other_test {
+    #[repr(transparent)]
+    struct Num([u64; 3]);
+
+    fn rt(value : u64) -> u64 {
+        value
+    }
+
+//    #[test]
+//    fn transparent_test() {
+//        let a = Num([1,2,3]);
+//        println!("{}", a[1]);
+//        assert!(false);
+//    }
 }

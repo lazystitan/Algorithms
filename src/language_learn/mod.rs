@@ -7,6 +7,7 @@ mod compare_option;
 mod option_test;
 mod map_bug;
 mod data_representation;
+mod lifetime_test;
 
 mod test_in_mod{
     #[test]
