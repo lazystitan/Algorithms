@@ -2,6 +2,7 @@
 mod test {
     use std::thread;
     use std::sync::mpsc::channel;
+    use std::sync::{Barrier, Arc, Mutex, Condvar};
 
     #[test]
     fn test1() {
@@ -30,6 +31,44 @@ mod test {
         for _ in 0..10 {
             let j = receiver.recv().unwrap();
             assert!(j < 10 && j >= 0);
+        }
+    }
+
+    #[test]
+    fn test2() {
+        let mut handles = Vec::with_capacity(10);
+        let barrier = Arc::new(Barrier::new(10));
+
+        for _ in 0..10 {
+            let c = barrier.clone();
+            handles.push(thread::spawn(move || {
+                println!("before");
+                c.wait();
+                println!("after");
+            }));
+        }
+
+        for handle in handles {
+            handle.join();
+        }
+
+    }
+
+    #[test]
+    fn test3() {
+        let pair = Arc::new((Mutex::new(false), Condvar::new()));
+        let pair2 = pair.clone();
+        thread::spawn(move || {
+            let (lock, cvar) = &*pair2;
+            let mut start = lock.lock().unwrap();
+            *start = true;
+            cvar.notify_one();
+        });
+
+        let (lock, cvar) = &*pair;
+        let mut started = lock.lock().unwrap();
+        while !*started {
+            started = cvar.wait(started).unwrap();
         }
     }
 }
