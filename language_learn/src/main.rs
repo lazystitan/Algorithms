@@ -8,6 +8,7 @@ mod lifetime_test;
 mod map_bug;
 mod mutable_immutable;
 mod option_test;
+mod box_test;
 
 mod language_learn_cc_rs_libc_test_lib {
     use crate::cc_rs_libc_test::{another_function, show_some_content};
@@ -37,6 +38,7 @@ mod test_in_mod {
     }
 }
 
+use std::iter::Filter;
 use language_learn_cc_rs_libc_test_lib::{call, call_show};
 
 // added:
@@ -111,6 +113,67 @@ macro_rules! recurrence {
         }
     };
 }
+
+const A: usize = 42;
+fn b<T>() {}
+type C<T> = Vec<T>;
+
+trait X {
+    const D: usize;
+    fn e<T>();
+    // type F<T>;
+}
+
+struct S;
+impl X for S {
+    const D: usize = 42;
+    fn e<T>() {}
+    // type F<T> = Vec<T>; GAT Generic Associated Types
+}
+
+trait IteratorDiy {
+    type Item;
+    fn next(&mut self) -> Option<Self::Item>;
+
+
+    fn filter<P>(self, predicate: P) -> Filter<Self, P>
+        where
+            P: for<'a> FnMut(&'a Self::Item) -> bool;
+}
+
+#[derive(Debug)]
+struct IntDiy(i32);
+
+struct VecDiy(Vec<IntDiy>);
+
+impl IteratorDiy for VecDiy {
+    type Item = IntDiy;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.pop()
+    }
+
+    fn filter<P>(self, predicate: P) -> Filter<Self, P> where P: for<'a> FnMut(&'a Self::Item) -> bool {
+        todo!()
+    }
+}
+
+
+fn gat_test() {
+    let mut v = VecDiy(vec![]);
+    for i in [1, 4, 5, 2, 1] {
+        v.0.push(IntDiy(i));
+    }
+    println!("{:?}", v.next().unwrap());
+    println!("{:?}", v.next().unwrap());
+    println!("{:?}", v.next().unwrap());
+    println!("{:?}", v.next().unwrap());
+}
+
+// for<'a> F: Fn(&'a T) -> &'a T
+
+
+
 fn main() {
     call_show();
     println!("{}", call(12) as i32);
@@ -136,4 +199,8 @@ fn main() {
     };
 
     println!("{:?}", a);
+
+    box_test::main();
+
+    gat_test();
 }
