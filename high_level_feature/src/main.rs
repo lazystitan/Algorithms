@@ -28,7 +28,7 @@ impl FromContext for Route {
 
 impl FromContext for Status {
     fn resolve(context: &Context) -> Self {
-        Self(context.route.clone())
+        Self(context.header.clone())
     }
 }
 
