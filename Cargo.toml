@@ -1,3 +1,3 @@
 [workspace]
-members = ["algorithms", "language_learn", "practice"]
+members = ["algorithms", "language_learn", "practice","high_level_feature"]
 
